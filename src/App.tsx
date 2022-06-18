@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import './App.scss';
-import {MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
+import {useAppDispatch, useAppSelector} from "./redux/redusers/rootReducer";
+import {fetchPeopleRequest} from "./redux/actions/peopleActions/peopleActions";
 
 const orders=[
     {id:1, order:'заявка 1'},
@@ -13,6 +15,15 @@ const orders=[
 function App() {
     const [selectedOrder,setSelectedOrder]=useState<null|number>(null)
 
+    const { pending, people, error } = useAppSelector(state=>state.people)
+
+    const dispatch=useAppDispatch()
+
+    console.log('pending',pending)
+    console.log('people',people)
+    console.log('error',error)
+
+
     const onHandlerSelect=(orderId:number)=>{
 
         setSelectedOrder(orderId)
@@ -22,6 +33,7 @@ function App() {
     <div className="App">
         <div>
             <div className="App__orders">
+                <button onClick={()=>dispatch(fetchPeopleRequest())}>ЗАПРОС</button>
                 <h3>Заявки:</h3>
                 <div className="App__orders__list">
                     {orders.map(({id,order})=>
