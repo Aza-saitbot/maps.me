@@ -1,33 +1,75 @@
 .App {
 
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: auto 3px 1fr;
   column-gap: 10px;
   margin:15px ;
   min-height: 90vh;
 
+  &__rightBorder{
+    cursor: pointer;
+    border: 3px solid #fff89b;
+  ;
+
+  }
 
   &__orders{
 
+    overflow-x: auto;
+
     &__list{
-      display: grid;
-      grid-template-rows: repeat(auto-fill,auto);
+      display: flex;
+      flex-direction: column;
       row-gap: 8px;
 
       &__item{
-        cursor: pointer;
-        padding: 10px;
-        border-radius:10px ;
 
-        &:hover{
-          background-color: #cdffc0;
+        border-radius:10px ;
+        display: grid;
+        grid-template-rows: 40px auto;
+       padding: 10px;
+        border: 1px solid #DDDDDD;
+        box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+
+        &__label{
+
+        }
+
+        &__dropdown{
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          column-gap: 10px;
+
+          &_item{
+            border-radius: 10px;
+            border: 1px solid #DDDDDD;
+            display: grid;
+            align-items: center;
+            grid-template-columns: auto auto;
+            column-gap: 10px;
+            background-color: white;
+            box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+
+            h3{
+              display: grid;
+              justify-items: start;
+              margin-left: 10px;
+            }
+            &_select{
+              cursor: pointer;
+            }
+
+          }
+
         }
 
         &.selected{
-          background-color: #cdffc0;
+          background-color: rgba(38,37,35,0.13);
         }
       }
     }
+
+
   }
 
   &__map{

@@ -1,64 +1,25 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import './App.scss';
-import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
-import {useAppDispatch, useAppSelector} from "./redux/redusers/rootReducer";
-import {fetchPeopleRequest} from "./redux/actions/peopleActions/peopleActions";
+import "leaflet/dist/leaflet.css";
+import Map from './components/Map'
+import ListOrders from "./components/ListOrders";
+import {useMouse} from "./hooks/hooks";
 
-const orders=[
-    {id:1, order:'заявка 1'},
-    {id:2, order:'заявка 2'},
-    {id:3, order:'заявка 3'},
-    {id:4, order:'заявка 4'},
-    {id:5, order:'заявка 5'},
-]
+const App =()=> {
+    const refDiv = useRef<HTMLDivElement>(null)
+    const [width,setWidth]=useState(400)
 
-function App() {
-    const [selectedOrder,setSelectedOrder]=useState<null|number>(null)
-
-    const { pending, people, error } = useAppSelector(state=>state.people)
-
-    const dispatch=useAppDispatch()
-
-    console.log('pending',pending)
-    console.log('people',people)
-    console.log('error',error)
-
-
-    const onHandlerSelect=(orderId:number)=>{
-
-        setSelectedOrder(orderId)
+    const onHandler = (e:React.MouseEvent<HTMLDivElement>) => {
+        setWidth(e.screenX)
     }
 
-  return (
-    <div className="App">
-        <div>
-            <div className="App__orders">
-                <button onClick={()=>dispatch(fetchPeopleRequest())}>ЗАПРОС</button>
-                <h3>Заявки:</h3>
-                <div className="App__orders__list">
-                    {orders.map(({id,order})=>
-                        <div
-                            onClick={()=>onHandlerSelect(id)}
-                            className={`App__orders__list__item ${selectedOrder === id ? 'selected': ''}`}
-                            key={id}
-                        >{order}</div>
-                    )}
-                </div>
-            </div>
+    useMouse(refDiv, onHandler)
+    return (
+        <div className="App">
+                <ListOrders width={width}/>
+            <div className="App__rightBorder" ref={refDiv}/>
+            <Map/>
         </div>
-            <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker position={[51.505, -0.09]}>
-                    <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker>
-            </MapContainer>
-    </div>
-  );
+    );
 }
-
 export default App;

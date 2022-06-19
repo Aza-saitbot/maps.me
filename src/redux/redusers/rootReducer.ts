@@ -1,11 +1,12 @@
 import {combineReducers} from "redux";
-import peopleReducer from "./peopleReducer/peopleReducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "../index";
+import ordersReducer from "./ordersReducer/ordersReducer";
 
 
 const rootReducer=combineReducers({
-    people:peopleReducer
+
+    orders:ordersReducer
 })
 
 export type RootState=ReturnType<typeof rootReducer>

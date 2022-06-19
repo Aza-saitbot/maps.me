@@ -1,10 +1,11 @@
 import {all, call, spawn} from "redux-saga/effects";
-import peopleSaga from "./peopleSaga/peopleSaga";
+import {ordersWatcher} from "./ordersSaga/ordersSaga";
+
 
 
 export function* rootSaga() {
 
-    const sagas=[peopleSaga]
+    const sagas=[ordersWatcher]
 
 
     const retrySagas= sagas.map(saga=>{

@@ -1,64 +1,44 @@
+import {Action} from "redux";
+import {ordersTypes} from "../redusers/ordersReducer/ordersReducer";
 
-import {peopleTypes} from "../Actiontypes/peopleTypes";
 
+export interface SelectedOrderType extends Action, OrderType {type: ordersTypes.SELECTED_ORDER }
 
-export type PeopleType={
-    name: string,
-    height: string,
-    mass:string,
-    hair_color:string,
-    skin_color: string,
-    eye_color: string,
-    birth_year:string,
-    gender: string,
-    homeworld: string,
-    films: Array<string>,
-    species: Array<any>,
-    vehicles: Array<string>,
-    starships: Array<string>,
-    created: string,
-    edited: string,
-    url: string
+export type PointType={
+    key:string,
+    label:string,
+    coordinates:Array<number>
 }
 
-
-
-export interface PeopleState {
-    pending:boolean
-    people: Array<PeopleType>;
-    error:null|string
+export type OrderType={
+    id:number
+    label:string
+    loading:Array<PointType>
+    uploading:Array<PointType>
 }
 
-export type FetchPeoplesSuccessPayload= {
-    count: number,
-    next: string,
-    previous: null,
-    results: Array<PeopleType>
-}
-
-export interface FetchPeopleFailurePayload {
-    error: string;
-}
-
-export interface FetchPeopleRequest {
-    type: typeof peopleTypes.FETCH_PEOPLE_REQUEST;
-}
-
-
-export type FetchPeoplesSuccess = {
-    type: typeof peopleTypes.FETCH_PEOPLE_SUCCESS;
-    payload: Array<PeopleType>
+export type setSelectedOrderSuccess = {
+    type: typeof ordersTypes.SELECTED_ORDER
+    payload: OrderType
 };
 
-export interface FetchPeoplesFailurePayload {
-    error: string;
+export type setPointASuccess = {
+    type: typeof ordersTypes.SET_POINT_A
+    payload: Array<number>
+};
+
+export type setPointBSuccess = {
+    type: typeof ordersTypes.SET_POINT_B
+    payload: Array<number>
+};
+
+
+export interface OrdersState {
+    selectedOrder:OrderType|null
+    listOrders:Array<OrderType>
+    pointA:Array<number>
+    pointB:Array<number>
 }
 
 
-export type FetchPeopleFailure = {
-    type: typeof peopleTypes.FETCH_PEOPLE_FAILURE;
-    payload: FetchPeoplesFailurePayload;
-};
-
-export type PeopleActions = FetchPeopleRequest
-    | FetchPeoplesSuccess | FetchPeopleFailure
+export type OrdersActions = setSelectedOrderSuccess | setPointASuccess | setPointBSuccess
